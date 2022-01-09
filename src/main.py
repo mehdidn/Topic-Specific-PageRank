@@ -21,8 +21,10 @@ if __name__ == '__main__':
     # for each line in data
     for line in lines:
 
-        # each line is in format u v
-        # then u=line[0] and v=line[2]
+        # each line is in format u v and
+        # means u has an edge to v so u->v
+        # in each line: u=line[0] and v=line[2]
+        # add v to adj[u]
         try:
             adj[int(line[0]) - 1].append(int(line[2]) - 1)
         except:
