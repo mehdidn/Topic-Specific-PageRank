@@ -23,8 +23,9 @@ def read_data(path):
     number_of_Edges = int(parts[len(parts) - 1])
 
     # Declare adjacency matrix
-    adj = [[] for i in range(number_of_vertices)]
+    adj = [[] for _ in range(number_of_vertices)]
 
+    # edges starting line in data file
     start_line_of_edges = 4
 
     # for each line in data
@@ -33,14 +34,14 @@ def read_data(path):
         # Current line
         line = lines[i + start_line_of_edges]
 
+        # split Current line
+        parts = line.split()
+
         # each line is in format u v and
         # means u has an edge to v so u->v
         # in each line: u=line[0] and v=line[2]
         # add v to adj[u]
-        try:
-            adj[int(line[0]) - 1].append(int(line[2]) - 1)
-        except:
-            pass
+        adj[int(parts[0]) - 1].append(int(parts[1]) - 1)
 
     # Getting beta from data
     # split one line before the last line
@@ -51,29 +52,19 @@ def read_data(path):
     beta = float(parts[len(parts) - 1])
 
     # Getting teleport set from data
-    # split last line
-    parts = lines[len(lines) - 1].split()
+    # replace redundant characters with space
+    # and split last line
+    parts = lines[len(lines) - 1].replace(",", " ").replace("{", " ").replace("}", " ").split()
 
     # Ignore two first indices
     # first index is 'S'
     # second index is '='
     start = 2
 
-    # Handle data input for {x,y,z}
-    if len(parts) == 3:
-        parts = parts[start].split(',')
-        start = 0
-
-    # Set teleport set
+    # Setting teleport set
     S = []
     for i in range(start, len(parts)):
+        S.append(int(parts[i]))
 
-        # at start the format is '{x'
-        if i == start:
-            S.append(int(parts[i][1]))
-
-        # others are in format 'x...'
-        else:
-            S.append(int(parts[i][0]))
-
+    # Return values
     return number_of_vertices, number_of_Edges, adj, beta, S
