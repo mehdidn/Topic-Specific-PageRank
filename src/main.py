@@ -1,41 +1,23 @@
 import numpy as np
 from topic_specific_pagerank import topic_specific_pagerank
 from topic_specific_pagerank import print_ranks
+from read_data import read_data
 
 # Main function
 if __name__ == '__main__':
 
-    # Read data
-    with open('../Data/data1.txt') as f:
+    # Read data and store values
+    number_of_vertices, number_of_Edges, adj, beta, S = read_data('../Data/data6.txt')
 
-        # Read lines
-        lines = f.readlines()
-
-    # First line of data is
-    # the number of vertices
-    n = int(lines[0])
-
-    # Declare adjacency matrix
-    adj = [[] for i in range(n)]
-
-    # for each line in data
-    for line in lines:
-
-        # each line is in format u v and
-        # means u has an edge to v so u->v
-        # in each line: u=line[0] and v=line[2]
-        # add v to adj[u]
-        try:
-            adj[int(line[0]) - 1].append(int(line[2]) - 1)
-        except:
-            pass
+    # Stop threshold
+    e = 0.0001
 
     # Declare M matrix
-    M = [[0] * n for i in range(n)]
+    M = [[0] * number_of_vertices for i in range(number_of_vertices)]
 
     # For each vertex
     # calculate each row of M
-    for u in range(n):
+    for u in range(number_of_vertices):
 
         # Number of adjacent vertices of u
         number_of_adjacent = 0
@@ -54,15 +36,6 @@ if __name__ == '__main__':
 
     # Create np array
     M = np.array(M)
-
-    # Beta
-    beta = 0.8
-
-    # Teleport set
-    S = [1]
-
-    # Stop threshold
-    e = 0.0001
 
     # Calculate page ranks
     # and print for each iteration
