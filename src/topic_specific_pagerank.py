@@ -28,16 +28,16 @@ def topic_specific_pagerank(M, beta, S, e):
     A = np.multiply(M, beta)                  # beta*M
     A = A + np.multiply(s, teleport)          # beta*M + (1-beta)/|S|
 
-    # Iteration 1
-    # r_1 = A*r_0
-    r_old = r0
-    r_new = A.dot(r_old)
-
     # Initialize difference
     diff = 1
 
     # Start iterations
     iteration = 1
+
+    # Iteration 1
+    # r_1 = A*r_0
+    r_old = r0
+    r_new = A.dot(r_old)
 
     # while the difference between r_new and
     # r_old is above threshold
