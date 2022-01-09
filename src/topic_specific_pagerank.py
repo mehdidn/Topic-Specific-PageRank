@@ -21,12 +21,14 @@ def topic_specific_pagerank(M, beta, S, e):
         s[i - 1] = [1]
     s = np.array(s)
 
-    teleport = round((1 - beta) / len(S), 2)  # 1-beta/|S|
+    teleport = (1 - beta) / len(S)  # 1-beta/|S|
 
     # A = beta*M + (1-beta)/|S|     if i is in S
     # A = beta*M + 0                otherwise
     A = np.multiply(M, beta)                  # beta*M
     A = A + np.multiply(s, teleport)          # beta*M + (1-beta)/|S|
+
+    print(A)
 
     # Initialize difference
     diff = 1
